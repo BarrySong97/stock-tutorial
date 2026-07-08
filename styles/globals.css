@@ -1,9 +1,160 @@
+/*
+ * @purpose 全局样式 + 设计 token:定义所有语义 CSS 变量(亮/暗双套)与正文排版覆盖。
+ * @role    全局;被 app/layout.tsx 引入,是全站配色与图表颜色的唯一来源。
+ * @deps    tailwindcss、@heroui/styles(@theme inline 接语义变量到工具类)
+ * @gotcha  A 股红涨绿跌;改 token 影响全站与所有图。参见 design.md
+ */
 @import "tailwindcss";
 @import "@heroui/styles";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-	--font-sans: "font", sans-serif;
-	--font-mono: "monospace", monospace;
+	--font-sans:
+		var(--font-latin), -apple-system, BlinkMacSystemFont, "PingFang SC",
+		"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+	--font-mono: var(--font-mono), monospace;
+}
+
+/*
+ * Design tokens: layout (fixed TOC + centered column) adapted from
+ * https://www.aidesignfieldguide.com/articles/barron-webster; background/text
+ * colors adapted from the user-supplied mimiwftt_stock_beginner_tutorial.html
+ * reference. Mapped onto HeroUI v3's semantic CSS variables, declared
+ * unlayered so they win over HeroUI's `@layer base` defaults.
+ */
+:root,
+.light,
+[data-theme="light"] {
+	--background: #f7f7f4;
+	--foreground: #181816;
+
+	--surface: #ffffff;
+	--surface-foreground: var(--foreground);
+	--surface-secondary: #f0f0ec;
+	--surface-tertiary: #e8e8e2;
+
+	--muted: #7c7c73;
+
+	--accent: #2b63c6;
+	--accent-foreground: #ffffff;
+
+	--border: #deded8;
+	--separator: #deded8;
+	--link: var(--accent);
+	--focus: var(--accent);
+
+	/* A-share convention: red = up, green = down (content-meaningful, not decorative) */
+	--stock-up: #c83f3f;
+	--stock-up-soft: #fff1f1;
+	--stock-down: #1f8a5b;
+	--stock-down-soft: #edf8f1;
+
+	/* Moving-average lines: MA5 amber, MA10 blue, MA30 purple */
+	--chart-line-1: #b67519;
+	--chart-line-2: #2f6fd0;
+	--chart-line-3: #7157b8;
+}
+
+.dark,
+[data-theme="dark"] {
+	--background: #18181a;
+	--foreground: #f2f2ee;
+
+	--surface: #202022;
+	--surface-foreground: var(--foreground);
+	--surface-secondary: #27272a;
+	--surface-tertiary: #302f2b;
+
+	--muted: #9a9a90;
+
+	--accent: #6c9df0;
+	--accent-foreground: #0f0f0e;
+
+	--border: #34342f;
+	--separator: #34342f;
+	--link: var(--accent);
+	--focus: var(--accent);
+
+	--stock-up: #e0645f;
+	--stock-up-soft: #2b1a1a;
+	--stock-down: #3fa877;
+	--stock-down-soft: #163024;
+
+	--chart-line-1: #d99b3f;
+	--chart-line-2: #6ba3f0;
+	--chart-line-3: #9d85d9;
+}
+
+/* TOC active/inactive states, matching the reference site's opacity-based treatment */
+.toc-link {
+	opacity: 0.5;
+	transition: opacity 0.3s var(--ease-out-quad, ease);
+}
+
+.toc-link:hover {
+	opacity: 0.8;
+}
+
+.toc-link[data-active="true"] {
+	opacity: 1;
+	font-weight: 700;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+.typography-prose h2,
+.typography-prose h3 {
+	scroll-margin-top: 2rem;
+}
+
+/*
+ * Typography rhythm (spacing measured off fumadocs.dev) with CJK corrections:
+ * HeroUI's `.typography-prose` sets font-size/weight but no vertical spacing,
+ * and its `tracking-tight` headings squeeze CJK glyphs. Chinese has no word
+ * spacing, so body copy needs the looser 1.85 leading to breathe.
+ */
+.typography-prose {
+	/* Progressive enhancement: auto-space between CJK and Latin/digits */
+	text-autospace: normal;
+}
+
+.typography-prose h2 {
+	font-size: 1.375rem;
+	line-height: 1.875rem;
+	font-weight: 600;
+	letter-spacing: normal;
+	margin-top: 2.5rem;
+	margin-bottom: 1rem;
+}
+
+.typography-prose h3 {
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+	font-weight: 600;
+	letter-spacing: normal;
+	margin-top: 2rem;
+	margin-bottom: 0.75rem;
+}
+
+.typography-prose p {
+	font-size: 0.9375rem;
+	line-height: 1.85;
+	margin-bottom: 1.25rem;
+}
+
+.typography-prose li {
+	font-size: 0.9375rem;
+	line-height: 1.85;
+}
+
+.typography-prose aside,
+.typography-prose figcaption {
+	line-height: 1.7;
+}
+
+.typography-prose p:last-child {
+	margin-bottom: 0;
 }

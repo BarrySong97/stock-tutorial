@@ -1,0 +1,7 @@
+# Cloudflare Pages 配置(纯静态托管)。
+# 本站是 Next.js 静态导出(next.config.mjs 里 output: "export"),构建产物在 out/。
+# 本地手动部署:  npx wrangler pages deploy   (读取下面的 pages_build_output_dir)
+# CI 自动部署:   见 .github/workflows/deploy.yml
+name = "stock-tutorial"
+pages_build_output_dir = "out"
+compatibility_date = "2026-07-08"
