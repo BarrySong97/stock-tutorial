@@ -9,8 +9,10 @@
 - `primitives.tsx` — 底层原子:`Diagram`(560 单位统一视口的 svg 外壳)、`Candle`、`GuideLine`、`DiagramLabel`(字号档 xs/sm/md)、`ChartGrid`、`ArrowMarker`、色板 `tones`/`diagramColor`。
 - `series.tsx` — 蜡烛序列层:`buildBars`(收盘价→OHLC,open=上一根 close)、`movingAverage` + `MALine`、`makeScale`(价格→像素)、`CandleSeries`、`VolumeBars`、`PriceGrid`、`LastPriceMark`。
 - 单张图(各一个文件,由 `index.ts` 桶导出):
-  - 纯 `primitives`:`quote-panel` `kline-anatomy` `yin-yang` `turnover-gauge` `order-book` `money-flow` `levels` `trading-clock`
+  - 纯 `primitives`(图表/示意):`quote-panel` `kline-anatomy` `yin-yang` `turnover-gauge` `order-book` `money-flow` `levels` `trading-clock`
   - 用 `series`(真实蜡烛序列):`timeshare` `volume` `moving-average` `support-resistance` `trend` `gap`
+  - 认知/方法论类(纯 `primitives` + 手绘路径):`market-cycle` `sector-rotation` `risk-management` `trading-psychology` `theme-concept` `ipo`
+  - 基本面 / 进场时机:`valuation` `fundamentals`(纯 `primitives`) · `entry-timing`(用 `series`)
 - 调用关系:`page.tsx → index.ts → 各图 → series/primitives → CSS 变量`。
 
 ## 数据流
